@@ -13,11 +13,28 @@ public class PlanetaService {
 	@Autowired
 	PlanetaRepository planetaRepository;
 	
+	// list all planets
 	public List<PlanetaEntity> findAll(){
         return planetaRepository.findAll();
     }
 	
-	public Long insertOrUpdate(PlanetaEntity planetaEntity){
-        return planetaRepository.save(planetaEntity).getId();
-    } 
+	// create new planet
+	public PlanetaEntity createPlaneta(PlanetaEntity planetaEntity){
+        return planetaRepository.save(planetaEntity);
+    }
+	
+	// search planet by id
+	public PlanetaEntity findPlanetaById(String id){
+        return planetaRepository.findById(id);
+    }
+	
+	// list planet by name
+	public PlanetaEntity findPlanetaByNome(String nome){
+        return planetaRepository.findByNome(nome);
+    }
+	
+	// delete planet
+	public void deletePlaneta(PlanetaEntity planetaEntity) {
+		planetaRepository.delete(planetaEntity);
+	}
 }
