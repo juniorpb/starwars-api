@@ -21,12 +21,15 @@ public class PlanetaController {
 	@Autowired
 	PlanetaService planetaService;
 	
-	@Autowired
-	
-
 	@GetMapping("/list")
-	public List<PlanetaEntity> findAllPlaneta() {
-		return planetaService.findAll();
+	public List<PlanetaEntity> findAllPlaneta() throws Exception {
+		List<PlanetaEntity> listaPlanetas = planetaService.findAll();
+		
+		for (PlanetaEntity planetaEntity : listaPlanetas) {
+			planetaEntity = findPlanetaAndSetQuantidadeFilmeSwapi(planetaEntity);
+		}
+		
+		return listaPlanetas;
 	}
 
 	@PostMapping
@@ -36,22 +39,16 @@ public class PlanetaController {
 
 	@GetMapping("/{id}")
 	public PlanetaEntity findPlanetaById(@PathVariable(value = "id") String id) throws Exception {
-		SwapiController swapiController = new SwapiController();
 		PlanetaEntity planetaEntity = planetaService.findPlanetaById(id);
 		
-		planetaEntity.setQuantidadeFilmes(swapiController.getQuantidadeFilmes(planetaEntity.getNome(), 1));
-		
-		return planetaEntity;
+		return findPlanetaAndSetQuantidadeFilmeSwapi(planetaEntity);
 	}
 
 	@PostMapping("/nome")
 	public PlanetaEntity findPlanetaByNome(@RequestBody PlanetaEntity planetaEntity) throws Exception {
-		SwapiController swapiController = new SwapiController();
-		PlanetaEntity planetaEntityFindNome = planetaService.findPlanetaByNome(planetaEntity.getNome());
+		planetaEntity = planetaService.findPlanetaByNome(planetaEntity.getNome());
 		
-		planetaEntityFindNome.setQuantidadeFilmes(swapiController.getQuantidadeFilmes(planetaEntity.getNome(), 1));
-		
-		return planetaEntityFindNome;
+		return findPlanetaAndSetQuantidadeFilmeSwapi(planetaEntity);
 	}
 
 	@DeleteMapping("/delete/{id}")
@@ -73,5 +70,16 @@ public class PlanetaController {
 		}
 		
 		return genericResponse;
+	}
+	
+	public PlanetaEntity findPlanetaAndSetQuantidadeFilmeSwapi(PlanetaEntity planetaEntity) throws Exception {
+		
+		if (planetaEntity == null) return planetaEntity;
+		
+		SwapiController swapiController = new SwapiController();
+				
+		planetaEntity.setQuantidadeFilmes(swapiController.getQuantidadeFilmes(planetaEntity.getNome(), 1));
+		
+		return planetaEntity;
 	}
 }
