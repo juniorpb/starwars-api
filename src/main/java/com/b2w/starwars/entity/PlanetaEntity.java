@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "planeta")
-public class PlanetaEntity implements Serializable{
+public class PlanetaEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "id", nullable = false)
@@ -27,10 +27,20 @@ public class PlanetaEntity implements Serializable{
 	private String clima;
 
 	private String terreno;
-	
+
 	@Transient
 	private long quantidadeFilmes;
-	
+
+	public PlanetaEntity() {
+	}
+
+	public PlanetaEntity(String nome, String clima, String terreno) {
+		super();
+		this.nome = nome;
+		this.clima = clima;
+		this.terreno = terreno;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -70,6 +80,5 @@ public class PlanetaEntity implements Serializable{
 	public void setQuantidadeFilmes(long quantidadeFilmes) {
 		this.quantidadeFilmes = quantidadeFilmes;
 	}
-	
-	
+
 }
