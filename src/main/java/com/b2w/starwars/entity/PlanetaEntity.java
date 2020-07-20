@@ -1,30 +1,41 @@
 package com.b2w.starwars.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "planeta")
-public class PlanetaEntity {
+public class PlanetaEntity implements Serializable{
+	private static final long serialVersionUID = 1L;
+
+	@Column(name = "id", nullable = false)
+	@GeneratedValue(generator = "uuid.hex")
+	@GenericGenerator(name = "uuid.hex", strategy = "uuid.hex")
 	@Id
-	@GeneratedValue
-	private Long id;
+	private String id;
 
 	private String nome;
 
 	private String clima;
 
 	private String terreno;
-
-	public Long getId() {
+	
+	@Transient
+	private long quantidadeFilmes;
+	
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -51,4 +62,14 @@ public class PlanetaEntity {
 	public void setTerreno(String terreno) {
 		this.terreno = terreno;
 	}
+
+	public long getQuantidadeFilmes() {
+		return quantidadeFilmes;
+	}
+
+	public void setQuantidadeFilmes(long quantidadeFilmes) {
+		this.quantidadeFilmes = quantidadeFilmes;
+	}
+	
+	
 }

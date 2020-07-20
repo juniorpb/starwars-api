@@ -9,5 +9,9 @@ import java.util.List;
 public interface PlanetaRepository extends CrudRepository<PlanetaEntity, Long>{
 	
 	List<PlanetaEntity> findAll();
+	
+	PlanetaEntity findById(String id);
+	
+	PlanetaEntity findByNome(String nome);
 
 }
