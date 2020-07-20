@@ -33,8 +33,15 @@ public class PlanetaController {
 	}
 
 	@PostMapping
-	public PlanetaEntity createPlaneta(@RequestBody PlanetaEntity planetaEntity) {
-		return planetaService.createPlaneta(planetaEntity);
+	public PlanetaEntity createPlaneta(@RequestBody PlanetaEntity planetaEntity) throws Exception {
+		
+		if (findPlanetaByNome(planetaEntity) == null) {
+			// if not exist planet name, create new
+			return findPlanetaAndSetQuantidadeFilmeSwapi(planetaService.createPlaneta(planetaEntity));
+		}
+		
+		// return if exist planet
+		return findPlanetaByNome(planetaEntity);
 	}
 
 	@GetMapping("/{id}")
