@@ -1,4 +1,4 @@
-<h1 align="center"> Star Wars B2W </h1>
+<h1 align="center"> 🚀 Star Wars B2W </h1>
 
 <p align="center">
   API para castastro de planetas Star Wars, alguns dados são obtidos pela API pública do Star Wars: https://swapi.dev/
